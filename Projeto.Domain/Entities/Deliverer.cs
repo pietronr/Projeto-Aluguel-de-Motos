@@ -1,15 +1,26 @@
 ﻿using Projeto.Domain.Enums;
+using Projeto.Domain.ValueObjects;
 
 namespace Projeto.Domain.Entities;
 
+/// <summary>
+/// Classe para representar entregadores.
+/// </summary>
 public class Deliverer : Traceable
 {
-    public required string Name { get; set; }
-    // TODO - Fazer ValueObject para CNPJ
-    public required string CorporateCode { get; set; }
-    public required DateTime BirthDate { get; set; }
-    // TODO - Fazer classe para CNH
-    public required string RegistrationNumber { get; set; }
-    public RegistrationType RegistrationType { get; set; }
-    public required string RegistrationImage { get; set; }
+    private Deliverer() { }
+    
+    public Deliverer(string id, string name, string registryCode, DateTime birthDate, string licenceNumber, LicenceType licenceType, string licenceImage)
+    {
+        Id = id;
+        Name = name;
+        RegistryCode = new(registryCode);
+        BirthDate = birthDate;
+        Licence = new(licenceNumber, licenceType, licenceImage);
+    }
+
+    public string Name { get; init; } = string.Empty;
+    public Registry RegistryCode { get; init; }
+    public DateTime BirthDate { get; init; }
+    public Licence Licence { get; init; }
 }

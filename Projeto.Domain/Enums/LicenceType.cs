@@ -1,7 +1,7 @@
 ﻿namespace Projeto.Domain.Enums;
 
 [Flags]
-public enum RegistrationType
+public enum LicenceType
 {
     A = 0,
     B,
