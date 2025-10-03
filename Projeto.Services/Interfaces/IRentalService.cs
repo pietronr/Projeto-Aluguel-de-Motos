@@ -6,5 +6,5 @@ public interface IRentalService
 {
     Task<Result<RentalResponse>> GetAsync(string id);
     Task<Result> InsertAsync(RentalRequest request);
-    Task<Result> SetDeliveryDateAsync(string id, UpdateRentalDeliveryDateRequest deliveryDateRequest);
+    Task<Result> CloseRentalAsync(string id, UpdateRentalDeliveryDateRequest deliveryDateRequest);
 }

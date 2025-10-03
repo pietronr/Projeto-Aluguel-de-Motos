@@ -43,7 +43,7 @@ public class RentalService(IRentalRepository repository, IDelivererRepository de
         }
     }
 
-    public async Task<Result> SetDeliveryDateAsync(string id, UpdateRentalDeliveryDateRequest deliveryDateRequest)
+    public async Task<Result> CloseRentalAsync(string id, UpdateRentalDeliveryDateRequest deliveryDateRequest)
     {
         Rental? rental = await repository.GetTrackedAsync(id);
 
