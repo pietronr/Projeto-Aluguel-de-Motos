@@ -22,7 +22,12 @@ public class Licence
 
     public static implicit operator string(Licence licence) => licence.Number;
 
-    public static bool IsValidLicence(string cnh)
+    public void UpdateImage(string newImage)
+    {
+        Image = newImage;
+    }
+
+    private static bool IsValidLicence(string cnh)
     {
         if (string.IsNullOrWhiteSpace(cnh))
             return false;
@@ -52,10 +57,5 @@ public class Licence
         dv2 = dv2 >= 10 ? 0 : dv2;
 
         return cnh[9].ToString() == dv1.ToString() && cnh[10].ToString() == dv2.ToString();
-    }
-
-    public void UpdateImage(string newImage)
-    {
-        Image = newImage;
     }
 }

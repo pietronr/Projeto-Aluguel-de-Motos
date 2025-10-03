@@ -15,6 +15,6 @@ public class Result
     [JsonPropertyName("mensagem")]
     public string? Message { get; init; }
 
-    public static Result Succes() => new(true, null);
+    public static Result Success() => new(true, null);
     public static Result Fail(string message) => new(false, message);
 }

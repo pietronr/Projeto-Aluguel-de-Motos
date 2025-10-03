@@ -9,7 +9,7 @@ public class DelivererRequest
 {
     public required string Identificador { get; set; }
     public required string Nome { get; set; }
-    public required string Cpnj { get; set; }
+    public required string Cnpj { get; set; }
 
     [JsonPropertyName("data_nascimento")]
     public required DateTime DataNascimento { get; set; }
@@ -21,9 +21,12 @@ public class DelivererRequest
     public required string TipoCnh { get; set; }
 
     [JsonPropertyName("imagem_cnh")]
-    public string? ImagemCnh { get; set; }
+    public required string ImagemCnh { get; set; }
 }
 
+/// <summary>
+/// Classe DTO para atualização da imagem da CNH do entregador.
+/// </summary>
 public class UpdateDelivererImageRequest
 {
     [JsonPropertyName("imagem_cnh")]
