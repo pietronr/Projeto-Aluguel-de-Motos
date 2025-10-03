@@ -22,8 +22,12 @@ internal class RentalEntityTypeConfiguration : IEntityTypeConfiguration<Rental>
         builder.Property(r => r.EstimatedEndDate)
             .IsRequired();
 
-        builder.Property(r => r.Plan)
+        builder.Property(r => r.DayPlan)
             .IsRequired();
+
+        builder.Ignore(r => r.HasAdvanceFee);
+
+        builder.Ignore(r => r.IsClosed);
 
         builder.HasOne<Motorcycle>()
                .WithMany()

@@ -1,48 +1,28 @@
-﻿namespace Projeto.Domain.Builders;
+﻿using Projeto.Domain.Entities;
+using Projeto.Domain.Helpers;
+
+namespace Projeto.Domain.Builders;
 
 /// <summary>
 /// Classe builder para calcular a taxa total de uma locação com base no plano escolhido, datas de início e entrega.
 /// </summary>
-public class RentalPlanBuilder
+public class RentalPlanBuilder(Rental rental)
 {
-    private readonly bool _initialized = false;
-    private static readonly decimal DelayFine = 50.0m;
-    private static readonly int[] PlansWithAdvanceFee = [7, 15];
-    private static readonly Dictionary<int, PlanFees> Plans = new()
-    {
-        { 7, new(30.0m, 0.20m) },
-        { 15, new(28.0m, 0.40m) },
-        { 30, new(22.0m) },
-        { 45, new(20.0m) },
-        { 50, new(18.0m) },
-    };
+    private readonly bool _initialized = true;
+    private readonly PlanFees _currentPlan = rental.GetPlanFees();
 
-    private PlanConfiguration _configuration;
-    private PlanFees _currentPlan;
     private decimal _advanceFine;
     private decimal _delayFine;
     private decimal _rentalTotalFee;
-
-    public RentalPlanBuilder(int dayPlan, DateTime startDate, DateTime deliveryDate)
-    {
-        if (!IsValidPlan(dayPlan))
-            throw new ArgumentException("Invalid rental plan.");
-
-        var estimatedEndDate = startDate.AddDays(dayPlan);
-
-        _configuration = new(dayPlan, startDate, estimatedEndDate, deliveryDate, PlansWithAdvanceFee.Contains(dayPlan));
-        _currentPlan = Plans[dayPlan];
-        _initialized = true;
-    }
 
     public RentalPlanBuilder CalculateAdvanceFine()
     {
         if (!_initialized)
             throw new InvalidOperationException("Configuration must be initialized before calculating rental fee.");
 
-        if (_configuration.DeliveryDate < _configuration.EstimatedEndDate && _configuration.ShouldConsiderAdvanceFee)
+        if (rental.DeliveryDate < rental.EstimatedEndDate && rental.HasAdvanceFee)
         {
-            var daysInAdvance = (_configuration.EstimatedEndDate - _configuration.DeliveryDate).Days;
+            var daysInAdvance = (rental.EstimatedEndDate - rental.DeliveryDate.TryValue()).Days;
             _advanceFine = daysInAdvance * _currentPlan.DailyFee *  _currentPlan.AdvanceFee;
         }
 
@@ -54,10 +34,10 @@ public class RentalPlanBuilder
         if (!_initialized)
             throw new InvalidOperationException("Configuration must be initialized before calculating rental fee.");
 
-        if (_configuration.DeliveryDate > _configuration.EstimatedEndDate)
+        if (rental.DeliveryDate > rental.EstimatedEndDate)
         {
-            var delayedDays = (_configuration.DeliveryDate - _configuration.EstimatedEndDate).Days;
-            _delayFine = delayedDays * DelayFine;
+            var delayedDays = (rental.DeliveryDate.TryValue() - rental.EstimatedEndDate).Days;
+            _delayFine = delayedDays * rental.DelayFine;
         }
 
         return this;
@@ -68,7 +48,7 @@ public class RentalPlanBuilder
         if (!_initialized)
             throw new InvalidOperationException("Configuration must be initialized before calculating rental fee.");
 
-        var rentalDays = (_configuration.DeliveryDate - _configuration.StartDate).Days;
+        var rentalDays = (rental.DeliveryDate.TryValue() - rental.StartDate).Days;
         var baseRentalFee = rentalDays * _currentPlan.DailyFee;
         _rentalTotalFee = baseRentalFee + _advanceFine + _delayFine;
 
@@ -76,9 +56,4 @@ public class RentalPlanBuilder
     }
 
     public decimal GetRentalTotalFee() => _rentalTotalFee;
-
-    public static bool IsValidPlan(int dayPlan) => Plans.ContainsKey(dayPlan);
 }
-
-public record struct PlanConfiguration(int DayPlan, DateTime StartDate, DateTime EstimatedEndDate, DateTime DeliveryDate, bool ShouldConsiderAdvanceFee);
-public record struct PlanFees(decimal DailyFee, decimal AdvanceFee = 0.0m);
