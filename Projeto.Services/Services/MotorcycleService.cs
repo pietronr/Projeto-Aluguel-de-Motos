@@ -34,6 +34,9 @@ public class MotorcycleService(IMotorcycleRepository repository, IUnitOfWork uow
         {
             Motorcycle motorcycle = new(motorcycleDto.Identificador, motorcycleDto.Modelo, motorcycleDto.Ano, motorcycleDto.Placa);
 
+            if (await repository.AnyAsync(null, motorcycleDto.Placa))
+                return Result.Fail("Dados inválidos");
+
             repository.Insert(motorcycle);
             _ = await uow.SaveChangesAsync();
 

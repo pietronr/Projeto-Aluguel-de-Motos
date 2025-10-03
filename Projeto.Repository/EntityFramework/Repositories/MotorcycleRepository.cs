@@ -34,7 +34,10 @@ public class MotorcycleRepository(ProjetoContext context) : IMotorcycleRepositor
 
     public Task<bool> HasRentalAsync(string id) => _rental.AnyAsync(x => x.MotorcycleId == id);
 
-    public Task<bool> AnyAsync(string id) => _dbSet.AnyAsync(x => x.Id == id);
+    public Task<bool> AnyAsync(string? id, string? plateNumber) => 
+        _dbSet.AnyAsync(x => 
+        (!string.IsNullOrEmpty(id) && x.Id == id) || 
+        (!string.IsNullOrEmpty(plateNumber) && x.PlateNumber == plateNumber));
 
     public void Insert(Motorcycle motorcycle)
     {
