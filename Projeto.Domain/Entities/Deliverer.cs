@@ -19,10 +19,10 @@ public class Deliverer : Traceable
         Licence = new(licenceNumber, licenceType, licenceImage);
     }
 
-    public string Name { get; init; } = string.Empty;
-    public Registry RegistryCode { get; init; }
-    public DateTime BirthDate { get; init; }
-    public Licence Licence { get; init; } = null!;
+    public string Name { get; private set; } = string.Empty;
+    public Registry RegistryCode { get; private set; }
+    public DateTime BirthDate { get; private set; }
+    public Licence Licence { get; private set; } = null!;
 
     public bool IsValidForRental => Licence.Type == LicenceType.A;
 }

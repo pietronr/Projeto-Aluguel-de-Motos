@@ -17,9 +17,9 @@ public class Motorcycle : Traceable
         PlateNumber = new(plateNumber);
     }
 
-    public int Year { get; internal set; }
-    public string Model { get; internal set; } = string.Empty;
-    public RegistrationPlate PlateNumber { get; internal set; }
+    public int Year { get; private set; }
+    public string Model { get; private set; } = string.Empty;
+    public RegistrationPlate PlateNumber { get; private set; }
 
     public void UpdateRegistrationPlate(string newPlateNumber)
     {

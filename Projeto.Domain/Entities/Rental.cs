@@ -33,12 +33,12 @@ public class Rental : Traceable
 
     public readonly decimal DelayFine = 50.0m;
 
-    public string MotorcycleId { get; init; } = string.Empty;
-    public string DelivererId { get; init; } = string.Empty;
-    public DateTime StartDate { get; init; }
-    public DateTime EndDate { get; init; }
-    public DateTime EstimatedEndDate { get; init; }
-    public int DayPlan { get; init; }
+    public string MotorcycleId { get; private set; } = string.Empty;
+    public string DelivererId { get; private set; } = string.Empty;
+    public DateTime StartDate { get; private set; }
+    public DateTime EndDate { get; private set; }
+    public DateTime EstimatedEndDate { get; private set; }
+    public int DayPlan { get; private set; }
     public DateTime? DeliveryDate { get; private set; }
 
     public bool HasAdvanceFee => PlansWithAdvanceFee.Contains(DayPlan);
