@@ -49,7 +49,7 @@ public class MotorcyclesController(IMotorcycleService service) : ControllerBase
         if (!result.IsSuccess)
             return BadRequest(result);
 
-        return Created();
+        return StatusCode(201);
     }
 
     [HttpPut("{id}/placa")]

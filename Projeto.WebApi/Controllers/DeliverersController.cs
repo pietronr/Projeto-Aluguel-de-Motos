@@ -25,7 +25,7 @@ public class DeliverersController(IDelivererService service) : ControllerBase
         if (!result.IsSuccess)
             return BadRequest(result);
 
-        return Created();
+        return StatusCode(201);
     }
 
     [HttpPost("{id}/cnh")]
@@ -39,6 +39,6 @@ public class DeliverersController(IDelivererService service) : ControllerBase
         if (!result.IsSuccess)
             return BadRequest(result);
 
-        return Created();
+        return StatusCode(201);
     }
 }
