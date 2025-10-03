@@ -23,6 +23,8 @@ internal class DelivererEntityTypeConfiguration : IEntityTypeConfiguration<Deliv
         builder.Property(d => d.BirthDate)
                .IsRequired();
 
+        builder.Ignore(d => d.IsValidForRental);
+
         builder.OwnsOne(d => d.Licence, licence =>
         {
             licence.Property(l => l.Number)

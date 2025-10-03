@@ -23,4 +23,6 @@ public class Deliverer : Traceable
     public Registry RegistryCode { get; init; }
     public DateTime BirthDate { get; init; }
     public Licence Licence { get; init; } = null!;
+
+    public bool IsValidForRental => Licence.Type != LicenceType.A;
 }

@@ -18,17 +18,16 @@ public class Rental : Traceable
     };
 
     private Rental() { }
-    public Rental(Motorcycle motorcycle, Deliverer deliverer, DateTime startDate, DateTime estimatedEndDate, int dayPlan)
+    public Rental(string motorcycleId, string delivererId, DateTime startDate, DateTime endDate, int dayPlan)
     {
-        if (deliverer.Licence.Type != Enums.LicenceType.A)
-            throw new ArgumentException("Deliverer must have a valid A type licence to rent a motorcycle.");
         if (!Plans.ContainsKey(dayPlan))
             throw new ArgumentException("Invalid rental plan.");
 
-        MotorcycleId = motorcycle.Id;
-        DelivererId = deliverer.Id;
+        MotorcycleId = motorcycleId;
+        DelivererId = delivererId;
         StartDate = startDate;
-        EstimatedEndDate = estimatedEndDate;
+        EndDate = endDate;
+        EstimatedEndDate = endDate;
         DayPlan = dayPlan;
     }
 
