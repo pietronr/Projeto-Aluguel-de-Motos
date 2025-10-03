@@ -18,7 +18,7 @@ Integração com banco **PostgreSQL**, usando **Docker** e **Docker Compose**.
 
 ## Como rodar
 
-1. Faça o build do Docker Compose:
+1. Faça o build do Docker Compose na raiz do projeto:
 ```bash
 docker compose up --build
 ```
