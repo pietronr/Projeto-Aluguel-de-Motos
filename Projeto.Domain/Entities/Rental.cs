@@ -18,13 +18,16 @@ public class Rental : Traceable
         Plan = plan;
     }
 
-    public required string MotorcycleId { get; set; }
-    public required string DelivererId { get; set; }
-    public required DateTime StartDate { get; set; }
-    public required DateTime EndDate { get; set; }
-    public required DateTime EstimatedEndDate { get; set; }
+    public required string MotorcycleId { get; init; }
+    public required string DelivererId { get; init; }
+    public required DateTime StartDate { get; init; }
+    public required DateTime EndDate { get; init; }
+    public required DateTime EstimatedEndDate { get; init; }
+    public int Plan { get; init; }
+    public DateTime? DeliveryDate { get; private set; }
 
-    // TODO - Fazer entity para Plan, com número de dias, preço, multa por atraso, etc.
-    public int Plan { get; set; }
-    public DateTime? DeliveryDate { get; set; }
+    public void CloseRental(DateTime deliveryDate)
+    {
+        DeliveryDate = deliveryDate;
+    }
 }
