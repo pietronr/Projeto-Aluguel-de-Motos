@@ -9,6 +9,7 @@ namespace Projeto.WebApi.Controllers;
 /// Classe controller para entregadores, orquestra as operações HTTP
 /// </summary>
 /// <param name="service">Serviço.</param>
+[SwaggerTag("entregadores")]
 [Route("entregadores")]
 [ApiController]
 public class DeliverersController(IDelivererService service) : ControllerBase

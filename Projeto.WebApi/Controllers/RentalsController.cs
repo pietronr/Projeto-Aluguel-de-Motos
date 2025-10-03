@@ -9,6 +9,7 @@ namespace Projeto.WebApi.Controllers;
 /// Classe controller para locações, orquestra as operações HTTP
 /// </summary>
 /// <param name="service">Serviço.</param>
+[SwaggerTag("locacao")]
 [Route("locacao")]
 [ApiController]
 public class RentalsController(IRentalService service) : ControllerBase

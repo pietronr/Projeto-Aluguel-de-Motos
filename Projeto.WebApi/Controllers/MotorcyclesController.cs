@@ -9,6 +9,7 @@ namespace Projeto.WebApi.Controllers;
 /// Classe controller para motos, orquestra as operações HTTP
 /// </summary>
 /// <param name="service">Serviço.</param>
+[SwaggerTag("motos")]
 [Route("motos")]
 [ApiController]
 public class MotorcyclesController(IMotorcycleService service) : ControllerBase
