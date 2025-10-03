@@ -45,6 +45,6 @@ public class Result<T> where T : class
     [JsonPropertyName("mensagem")]
     public string? Message { get; }
 
-    public Result<T> Success(T response) => new(response, true, null);
-    public Result<T> Fail(string message) => new(null, false, message);
+    public static Result<T> Success(T response) => new(response, true, null);
+    public static Result<T> Fail(string message) => new(null, false, message);
 }
