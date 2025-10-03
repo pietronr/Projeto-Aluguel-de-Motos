@@ -19,6 +19,9 @@ public class DelivererService(IDelivererRepository repository, IUnitOfWork uow) 
             Deliverer deliverer = new(request.Identificador, request.Nome, request.Cnpj, request.DataNascimento, 
                 request.NumeroCnh, Enum.Parse<LicenceType>(request.TipoCnh), request.ImagemCnh);
 
+            if (await repository.RegistryExists(deliverer.RegistryCode))
+                return Result.Fail("Dados inválidos");
+
             repository.Insert(deliverer);
             _ = await uow.SaveChangesAsync();
 

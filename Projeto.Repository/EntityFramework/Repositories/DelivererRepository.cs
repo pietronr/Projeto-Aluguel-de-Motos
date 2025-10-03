@@ -19,6 +19,8 @@ public class DelivererRepository(ProjetoContext context) : IDelivererRepository
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
+    public Task<bool> RegistryExists(string registryCode) => _dbSet.AnyAsync(x => x.RegistryCode == registryCode);
+
     public void Insert(Deliverer deliverer)
     {
         _dbSet.Add(deliverer);
