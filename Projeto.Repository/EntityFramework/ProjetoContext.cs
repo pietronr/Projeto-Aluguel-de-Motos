@@ -52,10 +52,41 @@ public class ProjetoContext(DbContextOptions<ProjetoContext> options) : DbContex
                 if (e.State == EntityState.Added)
                 {
                     entity.CreatedAt = now;
+
+                    // Se for Rental, gerar ID sequencial
+                    if (entity is Rental rental && string.IsNullOrEmpty(rental.Id))
+                    {
+                        rental.Id = GenerateRentalId();
+                    }
                 }
 
                 entity.UpdatedAt = now;
             });
+    }
+
+    /// <summary>
+    /// Obtém o próximo ID de locação no formato "locacaoX", onde X é um número sequencial.
+    /// Achei isso estranho, mas está no requisito. 
+    /// No Get de locação, ele retorna um ID nesse formato de string, mas ele não é passado via POST como em motos ou entregadores, logo fiz isso.
+    /// </summary>
+    /// <returns></returns>
+    private string GenerateRentalId()
+    {
+        int lastNumber = 0;
+
+        var lastRentalId = Rentals
+            .OrderByDescending(r => r.Id)
+            .Select(r => r.Id)
+            .FirstOrDefault();
+
+        if (!string.IsNullOrEmpty(lastRentalId) && lastRentalId.StartsWith("locacao"))
+        {
+            var numberPart = lastRentalId["locacao".Length..];
+            if (int.TryParse(numberPart, out var n))
+                lastNumber = n;
+        }
+
+        return $"locacao{lastNumber + 1}";
     }
 
     /// <summary>

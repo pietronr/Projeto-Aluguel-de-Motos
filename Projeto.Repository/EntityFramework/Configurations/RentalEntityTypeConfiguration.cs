@@ -11,8 +11,7 @@ internal class RentalEntityTypeConfiguration : IEntityTypeConfiguration<Rental>
         builder.HasKey(r => r.Id);
 
         builder.Property(r => r.Id)
-               .IsRequired()
-               .ValueGeneratedNever();
+               .IsRequired();
 
         builder.Property(r => r.StartDate)
             .IsRequired();
