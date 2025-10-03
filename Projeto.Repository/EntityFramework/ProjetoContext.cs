@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Projeto.Domain.Entities;
+using Projeto.Domain.ValueObjects;
 using System.Reflection;
+using Projeto.Repository.Helpers;
 
 namespace Projeto.Repository.EntityFramework;
 
@@ -26,6 +28,11 @@ public class ProjetoContext(DbContextOptions<ProjetoContext> options) : DbContex
         }
 
         ApplyEntitiesConfigurations(modelBuilder);
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<RegistrationPlate>().HaveConversion<RegistrationPlateConverter>();
     }
 
     /// <summary>
