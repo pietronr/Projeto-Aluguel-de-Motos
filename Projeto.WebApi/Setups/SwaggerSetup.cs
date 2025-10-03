@@ -5,6 +5,9 @@ public static class SwaggerSetup
     public static void AddSwagger(IServiceCollection services)
     {
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(c =>
+        {
+            c.EnableAnnotations();
+        });
     }
 }
