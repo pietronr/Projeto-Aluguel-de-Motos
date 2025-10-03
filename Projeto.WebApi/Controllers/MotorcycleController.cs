@@ -34,9 +34,9 @@ public class MotorcycleController(IMotorcycleService service) : ControllerBase
     [HttpPost]
     [SwaggerResponse(StatusCodes.Status201Created)]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(Result))]
-    public async Task<IActionResult> Post([FromBody] MotorcycleDto dto)
+    public async Task<IActionResult> Post([FromBody] MotorcycleDto request)
     {
-        var result = await service.InsertAsync(dto);
+        var result = await service.InsertAsync(request);
 
         if (!result.IsSuccess)
             return BadRequest(result);
@@ -47,9 +47,9 @@ public class MotorcycleController(IMotorcycleService service) : ControllerBase
     [HttpPut("{id}")]
     [SwaggerResponse(StatusCodes.Status200OK, "Placa modificada com sucesso", typeof(Result))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(Result))]
-    public async Task<IActionResult> Put(string id, [FromBody] UpdateMotorcyclePlateDto plateDto)
+    public async Task<IActionResult> Put(string id, [FromBody] UpdateMotorcyclePlateDto plateRequest)
     {
-        var result = await service.UpdateAsync(id, plateDto);
+        var result = await service.UpdateAsync(id, plateRequest);
 
         if (!result.IsSuccess)
             return BadRequest(result);

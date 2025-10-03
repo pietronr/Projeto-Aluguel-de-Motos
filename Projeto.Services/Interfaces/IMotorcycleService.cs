@@ -1,5 +1,4 @@
-﻿using Projeto.Domain.Entities;
-using Projeto.Services.Dtos;
+﻿using Projeto.Services.Dtos;
 
 namespace Projeto.Services.Interfaces;
 
