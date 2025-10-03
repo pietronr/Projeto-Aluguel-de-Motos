@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Projeto.Repository.EntityFramework;
 using Projeto.WebApi.Setups;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,7 @@ ConfigureServices(builder.Services, builder.Configuration);
 var app = builder.Build();
 
 ConfigureApp(app);
+CheckAndRunMigrations(app);
 
 app.Run();
 
@@ -31,4 +34,14 @@ static void ConfigureApp(WebApplication app)
     app.UseAuthorization();
     app.MapControllers();
     app.MapDefaultControllerRoute();
+}
+
+static void CheckAndRunMigrations(WebApplication app)
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<ProjetoContext>();
+    var pendingMigrations = db.Database.GetPendingMigrations();
+
+    if (pendingMigrations.Any())
+        db.Database.Migrate();
 }
