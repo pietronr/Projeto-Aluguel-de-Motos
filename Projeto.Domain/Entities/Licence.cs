@@ -4,6 +4,8 @@ namespace Projeto.Domain.Entities;
 
 public class Licence
 {
+    private Licence() { }
+
     public Licence(string number, LicenceType type, string image)
     {
         if (!IsValidLicence(number))
@@ -15,7 +17,7 @@ public class Licence
     }
 
     public LicenceType Type { get; init; }
-    public string Number { get; init; }
+    public string Number { get; init; } = string.Empty;
     public string Image { get; private set; } = string.Empty; // TODO - Deve ser armazenada em um serviço de arquivos
 
     public static implicit operator string(Licence licence) => licence.Number;

@@ -33,6 +33,7 @@ public class ProjetoContext(DbContextOptions<ProjetoContext> options) : DbContex
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Properties<RegistrationPlate>().HaveConversion<RegistrationPlateConverter>();
+        configurationBuilder.Properties<Registry>().HaveConversion<RegistryConverter>();
     }
 
     /// <summary>
