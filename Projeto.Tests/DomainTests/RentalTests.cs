@@ -31,7 +31,7 @@ public class RentalTests
     [InlineData(10)]
     [InlineData(0)]
     [InlineData(-7)]
-    public void Constructor_InvalidPlan_ShouldThrowArgumentException(int invalidPlan)
+    public void Constructor_InvalidPlan_ShouldThrow(int invalidPlan)
     {
         // Arrange
         var motorcycleId = "moto123";
