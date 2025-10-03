@@ -7,7 +7,7 @@ namespace Projeto.Repository.EntityFramework;
 /// Dependency Injection lida bem com a disposição, mas importante demonstrar aqui.
 /// É disposable para garantir o fechamento da conexão com o banco, além da liberação de recursos.
 /// </summary>
-/// <param name="context">DbContext da aplicação</param>
+/// <param name="context">DbContext da aplicação.</param>
 public class UnitOfWork(ProjetoContext context) : IUnitOfWork
 {
     private bool _disposed;

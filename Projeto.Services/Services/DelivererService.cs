@@ -5,6 +5,11 @@ using Projeto.Services.Interfaces;
 
 namespace Projeto.Services.Services;
 
+/// <summary>
+/// Classe serviço para os entregadores, repsonsável por operações CRUD e interações com a camada de repositório.
+/// </summary>
+/// <param name="repository">Camada de repositório.</param>
+/// <param name="uow">Unit of work para persistências.</param>
 public class DelivererService(IDelivererRepository repository, IUnitOfWork uow) : IDelivererService
 {
     public async Task<Result> InsertAsync(DelivererRequest request)
@@ -17,7 +22,7 @@ public class DelivererService(IDelivererRepository repository, IUnitOfWork uow) 
             repository.Insert(deliverer);
             _ = await uow.SaveChangesAsync();
 
-            return Result.Success();
+            return Result.Created();
         }
         catch (Exception ex) when (ex is ArgumentException)
         {
@@ -39,7 +44,7 @@ public class DelivererService(IDelivererRepository repository, IUnitOfWork uow) 
 
             //TODO - FAZER LÓGICA PARA ATUALIZAÇÃO DE IMAGEM AQUI
 
-            return Result.Success();
+            return Result.Created();
         }
         catch (Exception ex) when (ex is ArgumentException)
         {

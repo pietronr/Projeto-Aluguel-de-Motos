@@ -4,6 +4,11 @@ using Projeto.Services.Interfaces;
 
 namespace Projeto.Services.Services;
 
+/// <summary>
+/// Classe serviço para as motos, repsonsável por operações CRUD e interações com a camada de repositório.
+/// </summary>
+/// <param name="repository">Camada de repositório.</param>
+/// <param name="uow">Unit of work para persistências.</param>
 public class MotorcycleService(IMotorcycleRepository repository, IUnitOfWork uow) : IMotorcycleService
 {
     public async Task<Result<IEnumerable<MotorcycleDto>>> GetAllAsync(string? plateNumber)

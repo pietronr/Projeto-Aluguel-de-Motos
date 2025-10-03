@@ -6,9 +6,9 @@ using Projeto.Services.Interfaces;
 namespace Projeto.Repository.EntityFramework.Repositories;
 
 /// <summary>
-/// Classe de repositório para a entidade Motorcycle, implementando a interface IMotorcycleRepository.
+/// Classe repositório que lida com a persistência e sobrescrita de dados relacionados às motos.
 /// </summary>
-/// <param name="context"></param>
+/// <param name="context">DbContext da aplicação.</param>
 public class MotorcycleRepository(ProjetoContext context) : IMotorcycleRepository
 {
     private readonly DbSet<Motorcycle> _dbSet = context.Motorcycles;

@@ -2,6 +2,9 @@
 
 namespace Projeto.Domain.Entities;
 
+/// <summary>
+/// Classe que representa uma CNH.
+/// </summary>
 public class Licence
 {
     private Licence() { }

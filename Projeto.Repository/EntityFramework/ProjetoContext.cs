@@ -6,6 +6,10 @@ using Projeto.Repository.Helpers;
 
 namespace Projeto.Repository.EntityFramework;
 
+/// <summary>
+/// Classe orquestradora da integração com o banco de dados relacional.
+/// </summary>
+/// <param name="options"></param>
 public class ProjetoContext(DbContextOptions<ProjetoContext> options) : DbContext(options)
 {
     public virtual DbSet<Motorcycle> Motorcycles { get; set; }
