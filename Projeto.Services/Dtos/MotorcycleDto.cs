@@ -3,7 +3,7 @@
 namespace Projeto.Services.Dtos;
 
 /// <summary>
-/// Classe DTO para requests e responses, adequando ao modelo do Swagger.
+/// Classe DTO para requests e responses para motos, adequando ao modelo do Swagger.
 /// </summary>
 public class MotorcycleDto
 {
@@ -25,9 +25,9 @@ public class MotorcycleDto
 }
 
 /// <summary>
-/// Classe DTO para atualização da placa da motocicleta.
+/// Classe DTO para atualização da placa da moto.
 /// </summary>
 public class UpdateMotorcyclePlateDto
 {
-    public required string Placa { get; set; } = string.Empty;
+    public required string Placa { get; set; }
 }
