@@ -13,9 +13,7 @@ public class MotorcycleRepository(ProjetoContext context) : IMotorcycleRepositor
 {
     private readonly DbSet<Motorcycle> _dbSet = context.Motorcycles;
 
-    public Task<bool> AnyAsync(string id) => _dbSet.AnyAsync(m => m.Id == id);  
-
-    public async Task<IEnumerable<MotorcycleDto>> GetAllAsync(string? plateNumber = null)
+    public async Task<IEnumerable<MotorcycleDto>> GetAllAsync(string? plateNumber)
     {
         return await _dbSet.Where(x => plateNumber == null || x.PlateNumber == plateNumber)
                     .Select(x => MotorcycleDto.FromEntity(x))
@@ -30,6 +28,8 @@ public class MotorcycleRepository(ProjetoContext context) : IMotorcycleRepositor
                     .AsNoTracking()
                     .FirstOrDefaultAsync();
     }
+
+    public async Task<Motorcycle?> GetTrackedAsync(string id) => await _dbSet.FindAsync(id);
 
     public void Insert(Motorcycle motorcycle)
     {
