@@ -32,7 +32,9 @@ public class MotorcycleRepository(ProjetoContext context) : IMotorcycleRepositor
 
     public async Task<Motorcycle?> GetTrackedAsync(string id) => await _dbSet.FindAsync(id);
 
-    public Task<bool> HasRentalAsync(string id) => _rental.AnyAsync(x => x.MotorcycleId == id); 
+    public Task<bool> HasRentalAsync(string id) => _rental.AnyAsync(x => x.MotorcycleId == id);
+
+    public Task<bool> AnyAsync(string id) => _dbSet.AnyAsync(x => x.Id == id);
 
     public void Insert(Motorcycle motorcycle)
     {

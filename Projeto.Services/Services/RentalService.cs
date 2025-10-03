@@ -10,7 +10,8 @@ namespace Projeto.Services.Services;
 /// </summary>
 /// <param name="repository">Camada de repositório.</param>
 /// <param name="uow">Unit of work para persistências.</param>
-public class RentalService(IRentalRepository repository, IDelivererRepository delivererRepository, IUnitOfWork uow) : IRentalService
+public class RentalService(IRentalRepository repository, IDelivererRepository delivererRepository, 
+    IMotorcycleRepository motorcycleRepository, IUnitOfWork uow) : IRentalService
 {
     public async Task<Result<RentalResponse>> GetAsync(string id)
     {
@@ -28,7 +29,7 @@ public class RentalService(IRentalRepository repository, IDelivererRepository de
         {
             Deliverer? deliverer = await delivererRepository.GetAsync(request.EntregadorId);
 
-            if (deliverer == null || deliverer.IsValidForRental)
+            if (deliverer == null || deliverer.IsValidForRental || !await motorcycleRepository.AnyAsync(request.MotoId))
                 return Result.Fail("Dados inválidos");
 
             Rental rental = new(request.MotoId, deliverer.Id, request.DataInicio, request.DataTermino, request.Plano);
@@ -62,7 +63,7 @@ public class RentalService(IRentalRepository repository, IDelivererRepository de
             .CalculateRentalTotalFee()
             .GetRentalTotalFee();
 
-        // No swagger, apenas a mensagem é retornada, mas nos requisitos é dito que o valor deve retornar
+        // No swagger, apenas a mensagem é retornada, mas nos requisitos é dito que o valor deve retornar.
         // Dessa forma, alterei um pouco o retorno, incluindo o valor do cálculo. 
         RentalResultResponse result = new() { Mensagem = "Data de devolução informada com sucesso", ValorTotal = rentalTotalValue };
 
