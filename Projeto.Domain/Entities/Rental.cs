@@ -1,4 +1,6 @@
-﻿namespace Projeto.Domain.Entities;
+﻿using Projeto.Domain.Builders;
+
+namespace Projeto.Domain.Entities;
 
 /// <summary>
 /// Classe para representar locação de uma motocicleta por um entregador.
@@ -10,6 +12,8 @@ public class Rental : Traceable
     {
         if (deliverer.Licence.Type != Enums.LicenceType.A)
             throw new ArgumentException("Deliverer must have a valid A type licence to rent a motorcycle.");
+        if (!RentalPlanBuilder.IsValidPlan(plan))
+            throw new ArgumentException("Invalid rental plan.");
 
         MotorcycleId = motorcycle.Id;
         DelivererId = deliverer.Id;

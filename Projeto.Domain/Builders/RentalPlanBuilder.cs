@@ -1,5 +1,8 @@
 ﻿namespace Projeto.Domain.Builders;
 
+/// <summary>
+/// Classe builder para calcular a taxa total de uma locação com base no plano escolhido, datas de início e entrega.
+/// </summary>
 public class RentalPlanBuilder
 {
     private readonly bool _initialized = false;
