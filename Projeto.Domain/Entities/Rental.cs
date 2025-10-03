@@ -18,11 +18,11 @@ public class Rental : Traceable
         Plan = plan;
     }
 
-    public required string MotorcycleId { get; init; }
-    public required string DelivererId { get; init; }
-    public required DateTime StartDate { get; init; }
-    public required DateTime EndDate { get; init; }
-    public required DateTime EstimatedEndDate { get; init; }
+    public string MotorcycleId { get; init; } = string.Empty;
+    public string DelivererId { get; init; } = string.Empty;
+    public DateTime StartDate { get; init; }
+    public DateTime EndDate { get; init; }
+    public DateTime EstimatedEndDate { get; init; }
     public int Plan { get; init; }
     public DateTime? DeliveryDate { get; private set; }
 

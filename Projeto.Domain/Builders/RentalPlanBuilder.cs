@@ -1,4 +1,4 @@
-﻿namespace Projeto.Domain.Entities;
+﻿namespace Projeto.Domain.Builders;
 
 public class RentalPlanBuilder
 {
