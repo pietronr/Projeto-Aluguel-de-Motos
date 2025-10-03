@@ -45,7 +45,7 @@ public class MotorcycleService(IMotorcycleRepository repository, IUnitOfWork uow
         }
     }
 
-    public async Task<Result> UpdateAsync(string id, UpdateMotorcyclePlateDto plateDto)
+    public async Task<Result> UpdatePlateAsync(string id, UpdateMotorcyclePlateDto plateDto)
     {
         try
         {

@@ -44,12 +44,12 @@ public class MotorcycleController(IMotorcycleService service) : ControllerBase
         return Created();
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id}/placa")]
     [SwaggerResponse(StatusCodes.Status200OK, "Placa modificada com sucesso", typeof(Result))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(Result))]
     public async Task<IActionResult> Put(string id, [FromBody] UpdateMotorcyclePlateDto plateRequest)
     {
-        var result = await service.UpdateAsync(id, plateRequest);
+        var result = await service.UpdatePlateAsync(id, plateRequest);
 
         if (!result.IsSuccess)
             return BadRequest(result);
