@@ -1,6 +1,4 @@
-﻿using Projeto.Domain.Builders;
-
-namespace Projeto.Domain.Entities;
+﻿namespace Projeto.Domain.Entities;
 
 /// <summary>
 /// Classe para representar locação de uma motocicleta por um entregador.
