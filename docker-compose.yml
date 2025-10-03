@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  projeto.webapi:
+    build:
+      context: .
+      dockerfile: Projeto.WebApi/Dockerfile
+    ports:
+      - "5000:8080"   # mapeia porta externa -> interna
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=rentaldb;Username=postgres;Password=postgres"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15
+    container_name: projeto_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rentaldb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
