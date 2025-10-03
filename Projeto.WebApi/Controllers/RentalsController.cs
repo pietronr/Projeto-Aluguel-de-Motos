@@ -44,7 +44,7 @@ public class RentalsController(IRentalService service) : ControllerBase
 
     [HttpPut("{id}/devolucao")]
     [SwaggerOperation("Informar data de devolução e calcular valor")]
-    [SwaggerResponse(StatusCodes.Status200OK, "Data de devolução informada com sucesso", typeof(Result))]
+    [SwaggerResponse(StatusCodes.Status200OK, "Data de devolução informada com sucesso", typeof(RentalResultResponse))]
     [SwaggerResponse(StatusCodes.Status400BadRequest, "Dados inválidos", typeof(Result))]
     public async Task<IActionResult> Put(string id, [FromBody] UpdateRentalDeliveryDateRequest deliveryDateRequest)
     {
