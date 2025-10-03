@@ -9,6 +9,7 @@ namespace Projeto.WebApi.Controllers;
 /// Classe controller para motos, orquestra as operações HTTP
 /// </summary>
 /// <param name="service">Serviço.</param>
+[ApiExplorerSettings(GroupName = "motos")]
 [Route("api/1.0.0/motos")]
 [ApiController]
 public class MotorcycleController(IMotorcycleService service) : ControllerBase
