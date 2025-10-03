@@ -42,7 +42,7 @@ public class MotorcycleService(IMotorcycleRepository repository, IUnitOfWork uow
 
             return Result.Created();
         }
-        catch (Exception ex) when (ex is ArgumentException)
+        catch (Exception)
         {
             return Result.Fail("Dados inválidos");
         }
@@ -63,7 +63,7 @@ public class MotorcycleService(IMotorcycleRepository repository, IUnitOfWork uow
 
             return Result.Ok("Placa modificada com sucesso");
         }
-        catch (Exception ex) when (ex is ArgumentException)
+        catch (Exception)
         {
             return Result.Fail("Dados inválidos");
         }

@@ -27,7 +27,7 @@ public class DelivererService(IDelivererRepository repository, IUnitOfWork uow) 
 
             return Result.Created();
         }
-        catch (Exception ex) when (ex is ArgumentException)
+        catch (Exception)
         {
             return Result.Fail("Dados inválidos");
         }
@@ -49,7 +49,7 @@ public class DelivererService(IDelivererRepository repository, IUnitOfWork uow) 
 
             return Result.Created();
         }
-        catch (Exception ex) when (ex is ArgumentException)
+        catch (Exception)
         {
             return Result.Fail("Dados inválidos");
         }
