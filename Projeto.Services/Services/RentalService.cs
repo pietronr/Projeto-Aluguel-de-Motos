@@ -29,7 +29,7 @@ public class RentalService(IRentalRepository repository, IDelivererRepository de
         {
             Deliverer? deliverer = await delivererRepository.GetAsync(request.EntregadorId);
 
-            if (deliverer == null || deliverer.IsValidForRental || !await motorcycleRepository.AnyAsync(request.MotoId, null))
+            if (deliverer == null || !deliverer.IsValidForRental || !await motorcycleRepository.IdExistsAsync(request.MotoId))
                 return Result.Fail("Dados inválidos");
 
             Rental rental = new(request.MotoId, deliverer.Id, request.DataInicio, request.DataTermino, request.Plano);

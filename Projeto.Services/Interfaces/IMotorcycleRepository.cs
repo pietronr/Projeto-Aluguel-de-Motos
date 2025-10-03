@@ -9,7 +9,8 @@ public interface IMotorcycleRepository
     Task<MotorcycleDto?> GetAsync(string id);
     Task<Motorcycle?> GetTrackedAsync(string id);
     Task<bool> HasRentalAsync(string id);
-    Task<bool> AnyAsync(string? id, string? plateNumber);
+    Task<bool> IdExistsAsync(string id);
+    Task<bool> PlateNumberExistsAsync(string plateNumber);
     void Insert(Motorcycle motorcycle);
     void Remove(Motorcycle motorcycle);
 }

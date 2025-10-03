@@ -15,7 +15,7 @@ public class MotorcycleService(IMotorcycleRepository repository, IUnitOfWork uow
     {
         IEnumerable<MotorcycleDto> motorcycles = await repository.GetAllAsync(plateNumber);
 
-        return Result<IEnumerable<MotorcycleDto>>.Success(motorcycles);
+        return Result<IEnumerable<MotorcycleDto>>.Success(motorcycles.OrderBy(x => x.Identificador));
     }
 
     public async Task<Result<MotorcycleDto>> GetAsync(string id)
@@ -34,7 +34,7 @@ public class MotorcycleService(IMotorcycleRepository repository, IUnitOfWork uow
         {
             Motorcycle motorcycle = new(motorcycleDto.Identificador, motorcycleDto.Modelo, motorcycleDto.Ano, motorcycleDto.Placa);
 
-            if (await repository.AnyAsync(null, motorcycleDto.Placa))
+            if (await repository.PlateNumberExistsAsync(motorcycleDto.Placa))
                 return Result.Fail("Dados inválidos");
 
             repository.Insert(motorcycle);

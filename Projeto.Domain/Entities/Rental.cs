@@ -41,12 +41,11 @@ public class Rental : Traceable
 
     public bool HasAdvanceFee => PlansWithAdvanceFee.Contains(DayPlan);
 
-    public bool IsClosed { get; private set; }
+    public bool IsClosed => DeliveryDate != null;
 
     public void CloseRental(DateTime deliveryDate)
     {
         DeliveryDate = deliveryDate;
-        IsClosed = true;
     }
 
     public PlanFees GetPlanFees() => Plans[DayPlan];
