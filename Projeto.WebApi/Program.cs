@@ -1,26 +1,34 @@
+using Projeto.WebApi.Setups;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen();
+ConfigureServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+ConfigureApp(app);
+
+app.Run();
+
+static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+{
+    ControllersSetup.AddContollersWithJson(services);
+    SwaggerSetup.AddSwagger(services);
+    DependencyInjectionSetup.AddApplicationServices(services);
+    DbContextSetup.AddDbContext(services, configuration);
+
+    services.AddMemoryCache();
+    services.AddCors();
+}
+
+static void ConfigureApp(WebApplication app)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(access => access.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+    app.UseRouting();
+    app.UseHttpsRedirection();
+    app.UseAuthorization();
+    app.MapControllers();
+    app.MapDefaultControllerRoute();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
