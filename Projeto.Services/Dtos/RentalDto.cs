@@ -78,3 +78,10 @@ public class UpdateRentalDeliveryDateRequest
     [JsonPropertyName("data_devolucao")]
     public required DateTime DataDevolucao { get; set; }
 }
+
+public class RentalResultResponse
+{
+    [JsonPropertyName("valor_total")]
+    public required decimal ValorTotal { get; set; }
+    public required string Mensagem { get; set; }
+}

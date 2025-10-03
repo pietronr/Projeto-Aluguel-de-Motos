@@ -53,6 +53,6 @@ public class RentalsController(IRentalService service) : ControllerBase
         if (!result.IsSuccess)
             return BadRequest(result);
 
-        return Ok(result);
+        return Ok(result.Response);
     }
 }

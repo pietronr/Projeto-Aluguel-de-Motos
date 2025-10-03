@@ -1,4 +1,5 @@
-﻿using Projeto.Domain.Entities;
+﻿using Projeto.Domain.Builders;
+using Projeto.Domain.Entities;
 using Projeto.Services.Dtos;
 using Projeto.Services.Interfaces;
 
@@ -43,17 +44,28 @@ public class RentalService(IRentalRepository repository, IDelivererRepository de
         }
     }
 
-    public async Task<Result> CloseRentalAsync(string id, UpdateRentalDeliveryDateRequest deliveryDateRequest)
+    public async Task<Result<RentalResultResponse>> CloseRentalAsync(string id, UpdateRentalDeliveryDateRequest deliveryDateRequest)
     {
         Rental? rental = await repository.GetTrackedAsync(id);
 
         if (rental == null || rental.IsClosed)
-            return Result.Fail("Dados inválidos");
+            return Result<RentalResultResponse>.Fail("Dados inválidos");
 
         rental.CloseRental(deliveryDateRequest.DataDevolucao);
-
         _ = uow.SaveChangesAsync();
 
-        return Result.Ok("Data de devolução informada com sucesso"); // retornar valor de devolução.
+        RentalPlanBuilder builder = new(rental);
+
+        decimal rentalTotalValue = builder
+            .CalculateAdvanceFine()
+            .CalculateDelayFine()
+            .CalculateRentalTotalFee()
+            .GetRentalTotalFee();
+
+        // No swagger, apenas a mensagem é retornada, mas nos requisitos é dito que o valor deve retornar
+        // Dessa forma, alterei um pouco o retorno, incluindo o valor do cálculo. 
+        RentalResultResponse result = new() { Mensagem = "Data de devolução informada com sucesso", ValorTotal = rentalTotalValue };
+
+        return Result<RentalResultResponse>.Success(result);
     }
 }
