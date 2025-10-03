@@ -22,5 +22,5 @@ public class Deliverer : Traceable
     public string Name { get; init; } = string.Empty;
     public Registry RegistryCode { get; init; }
     public DateTime BirthDate { get; init; }
-    public Licence Licence { get; init; }
+    public Licence Licence { get; init; } = null!;
 }

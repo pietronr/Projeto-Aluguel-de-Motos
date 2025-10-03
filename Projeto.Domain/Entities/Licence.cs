@@ -1,8 +1,8 @@
 ﻿using Projeto.Domain.Enums;
 
-namespace Projeto.Domain.ValueObjects;
+namespace Projeto.Domain.Entities;
 
-public struct Licence
+public class Licence
 {
     public Licence(string number, LicenceType type, string image)
     {
@@ -14,12 +14,9 @@ public struct Licence
         Image = image;
     }
 
-    public readonly LicenceType Type { get; init; }
+    public LicenceType Type { get; init; }
     public string Number { get; init; }
-
-    //TODO - IMAGEM DEVE SER GRAVADA EM UM SERVIÇO DE ARMAZENAMENTO, NÃO NO BANCO.
-    // TALVEZ FAZER CLASSE PARA LIDAR COM IMAGENS?
-    public string Image { get; private set; } = string.Empty;
+    public string Image { get; private set; } = string.Empty; // TODO - Deve ser armazenada em um serviço de arquivos
 
     public static implicit operator string(Licence licence) => licence.Number;
 
@@ -55,7 +52,6 @@ public struct Licence
         return cnh[9].ToString() == dv1.ToString() && cnh[10].ToString() == dv2.ToString();
     }
 
-    //TODO - IMPLEMENTAR ISSO
     public void UpdateImage(string newImage)
     {
         Image = newImage;
