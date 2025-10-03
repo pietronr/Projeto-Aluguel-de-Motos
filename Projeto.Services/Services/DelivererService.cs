@@ -30,7 +30,7 @@ public class DelivererService(IDelivererRepository repository, IUnitOfWork uow) 
         }
     }
 
-    public async Task<Result> SendLicenceImageAsync(string id, string licenceImage)
+    public async Task<Result> UpdateLicenceImageAsync(string id, UpdateDelivererImageRequest licenceImage)
     {
         try
         {
@@ -40,7 +40,7 @@ public class DelivererService(IDelivererRepository repository, IUnitOfWork uow) 
             if (deliverer is null)
                 return Result.Fail("Dados inválidos");
 
-            deliverer.Licence.UpdateImage(licenceImage);
+            deliverer.Licence.UpdateImage(licenceImage.ImagemCnh);
 
             //TODO - FAZER LÓGICA PARA ATUALIZAÇÃO DE IMAGEM AQUI
 

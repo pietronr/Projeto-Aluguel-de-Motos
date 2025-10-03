@@ -5,5 +5,5 @@ namespace Projeto.Services.Interfaces;
 public interface IDelivererService
 {
     Task<Result> InsertAsync(DelivererRequest request);
-    Task<Result> SendLicenceImageAsync(string id, string licenceImage);
+    Task<Result> UpdateLicenceImageAsync(string id, UpdateDelivererImageRequest licenceImage);
 }
