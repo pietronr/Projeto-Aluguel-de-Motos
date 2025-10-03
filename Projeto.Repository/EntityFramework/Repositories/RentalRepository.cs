@@ -13,8 +13,6 @@ public class RentalRepository(ProjetoContext context) : IRentalRepository
 {
     private readonly DbSet<Rental> _dbSet = context.Rentals;
 
-    public Task<bool> AnyAsync(string id) => _dbSet.AnyAsync(m => m.Id == id);
-
     public async Task<RentalResponse?> GetAsync(string id)
     {
         return await _dbSet.Where(x => x.Id == id)
@@ -22,6 +20,8 @@ public class RentalRepository(ProjetoContext context) : IRentalRepository
                     .AsNoTracking()
                     .FirstOrDefaultAsync();
     }
+
+    public async Task<Rental?> GetTrackedAsync(string id) => await _dbSet.FindAsync(id);
 
     public void Insert(Rental rental)
     {

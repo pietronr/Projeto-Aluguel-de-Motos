@@ -1,0 +1,59 @@
+﻿using Projeto.Domain.Entities;
+using Projeto.Services.Dtos;
+using Projeto.Services.Interfaces;
+
+namespace Projeto.Services.Services;
+
+/// <summary>
+/// Classe serviço para os entregadores, repsonsável por operações CRUD e interações com a camada de repositório.
+/// </summary>
+/// <param name="repository">Camada de repositório.</param>
+/// <param name="uow">Unit of work para persistências.</param>
+public class RentalService(IRentalRepository repository, IDelivererRepository delivererRepository, IUnitOfWork uow) : IRentalService
+{
+    public async Task<Result<RentalResponse>> GetAsync(string id)
+    {
+        RentalResponse? rental = await repository.GetAsync(id);
+
+        if (rental == null)
+            return Result<RentalResponse>.Fail("Locação não encontrada");
+
+        return Result<RentalResponse>.Success(rental);
+    }
+
+    public async Task<Result> InsertAsync(RentalRequest request)
+    {
+        try
+        {
+            Deliverer? deliverer = await delivererRepository.GetAsync(request.EntregadorId);
+
+            if (deliverer == null || deliverer.IsValidForRental)
+                return Result.Fail("Dados inválidos");
+
+            Rental rental = new(request.MotoId, deliverer.Id, request.DataInicio, request.DataTermino, request.Plano);
+
+            repository.Insert(rental);
+            _ = await uow.SaveChangesAsync();
+
+            return Result.Created();
+        }
+        catch (Exception ex) when (ex is ArgumentException)
+        {
+            return Result.Fail("Dados inválidos");
+        }
+    }
+
+    public async Task<Result> SetDeliveryDateAsync(string id, UpdateRentalDeliveryDateRequest deliveryDateRequest)
+    {
+        Rental? rental = await repository.GetTrackedAsync(id);
+
+        if (rental == null || rental.IsClosed)
+            return Result.Fail("Dados inválidos");
+
+        rental.CloseRental(deliveryDateRequest.DataDevolucao);
+
+        _ = uow.SaveChangesAsync();
+
+        return Result.Ok("Data de devolução informada com sucesso"); // retornar valor de devolução.
+    }
+}

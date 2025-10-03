@@ -6,6 +6,6 @@ namespace Projeto.Services.Interfaces;
 public interface IRentalRepository
 {
     Task<RentalResponse?> GetAsync(string id);
+    Task<Rental?> GetTrackedAsync(string id);
     void Insert(Rental rental);
-    Task<bool> AnyAsync(string id);
 }
