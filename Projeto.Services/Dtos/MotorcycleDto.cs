@@ -23,3 +23,11 @@ public class MotorcycleDto
         };
     }
 }
+
+/// <summary>
+/// Classe DTO para atualização da placa da motocicleta.
+/// </summary>
+public class UpdateMotorcyclePlateDto
+{
+    public required string Placa { get; set; } = string.Empty;
+}
