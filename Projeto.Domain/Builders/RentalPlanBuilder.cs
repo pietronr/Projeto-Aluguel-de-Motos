@@ -6,10 +6,22 @@ namespace Projeto.Domain.Builders;
 /// <summary>
 /// Classe builder para calcular a taxa total de uma locação com base no plano escolhido, datas de início e entrega.
 /// </summary>
-public class RentalPlanBuilder(Rental rental)
+public class RentalPlanBuilder
 {
-    private readonly bool _initialized = true;
-    private readonly PlanFees _currentPlan = rental.GetPlanFees();
+    private readonly bool _initialized;
+    private readonly PlanFees _currentPlan;
+    private readonly Rental _rental;
+
+    public RentalPlanBuilder(Rental rental)
+    {
+        if (!rental.IsClosed)
+            throw new InvalidOperationException("Rental must be closed to calculate and initialize builder");
+
+        _rental = rental;
+        _currentPlan = rental.GetPlanFees();
+        _initialized = true;
+
+    }
 
     private decimal _advanceFine;
     private decimal _delayFine;
@@ -20,9 +32,9 @@ public class RentalPlanBuilder(Rental rental)
         if (!_initialized)
             throw new InvalidOperationException("Configuration must be initialized before calculating rental fee.");
 
-        if (rental.DeliveryDate < rental.EstimatedEndDate && rental.HasAdvanceFee)
+        if (_rental.DeliveryDate < _rental.EstimatedEndDate && _rental.HasAdvanceFee)
         {
-            var daysInAdvance = (rental.EstimatedEndDate - rental.DeliveryDate.TryValue()).Days;
+            var daysInAdvance = (_rental.EstimatedEndDate - _rental.DeliveryDate.TryValue()).Days;
             _advanceFine = daysInAdvance * _currentPlan.DailyFee *  _currentPlan.AdvanceFee;
         }
 
@@ -34,10 +46,10 @@ public class RentalPlanBuilder(Rental rental)
         if (!_initialized)
             throw new InvalidOperationException("Configuration must be initialized before calculating rental fee.");
 
-        if (rental.DeliveryDate > rental.EstimatedEndDate)
+        if (_rental.DeliveryDate > _rental.EstimatedEndDate)
         {
-            var delayedDays = (rental.DeliveryDate.TryValue() - rental.EstimatedEndDate).Days;
-            _delayFine = delayedDays * rental.DelayFine;
+            var delayedDays = (_rental.DeliveryDate.TryValue() - _rental.EstimatedEndDate).Days;
+            _delayFine = delayedDays * _rental.DelayFine;
         }
 
         return this;
@@ -48,7 +60,7 @@ public class RentalPlanBuilder(Rental rental)
         if (!_initialized)
             throw new InvalidOperationException("Configuration must be initialized before calculating rental fee.");
 
-        var rentalDays = (rental.DeliveryDate.TryValue() - rental.StartDate).Days;
+        var rentalDays = (_rental.EstimatedEndDate - _rental.StartDate).Days;
         var baseRentalFee = rentalDays * _currentPlan.DailyFee;
         _rentalTotalFee = baseRentalFee + _advanceFine + _delayFine;
 
