@@ -13,10 +13,13 @@ public class DelivererRequest
 
     [JsonPropertyName("data_nascimento")]
     public required DateTime DataNascimento { get; set; }
+
     [JsonPropertyName("numero_cnh")]    
     public required string NumeroCnh { get; set; }
+
     [JsonPropertyName("tipo_cnh")]
     public required string TipoCnh { get; set; }
+
     [JsonPropertyName("imagem_cnh")]
     public string? ImagemCnh { get; set; }
 }
