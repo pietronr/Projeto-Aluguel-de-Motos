@@ -4,6 +4,6 @@ namespace Projeto.Services.Interfaces;
 
 public interface IDelivererRepository
 {
+    Task<Deliverer?> GetAsync(string id);
     void Insert(Deliverer deliverer);
-    Task<bool> AnyAsync(string id);
 }
