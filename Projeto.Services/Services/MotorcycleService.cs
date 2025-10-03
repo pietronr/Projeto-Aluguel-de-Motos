@@ -70,7 +70,7 @@ public class MotorcycleService(IMotorcycleRepository repository, IUnitOfWork uow
     {
         Motorcycle? motorcycle = await repository.GetTrackedAsync(id);
 
-        if (motorcycle == null)
+        if (motorcycle == null || await repository.HasRentalAsync(id))
             return Result.Fail("Dados inválidos");
 
         repository.Remove(motorcycle);

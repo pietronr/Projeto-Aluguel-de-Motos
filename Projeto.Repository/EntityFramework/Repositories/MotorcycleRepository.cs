@@ -12,6 +12,7 @@ namespace Projeto.Repository.EntityFramework.Repositories;
 public class MotorcycleRepository(ProjetoContext context) : IMotorcycleRepository
 {
     private readonly DbSet<Motorcycle> _dbSet = context.Motorcycles;
+    private readonly DbSet<Rental> _rental = context.Rentals;
 
     public async Task<IEnumerable<MotorcycleDto>> GetAllAsync(string? plateNumber)
     {
@@ -30,6 +31,8 @@ public class MotorcycleRepository(ProjetoContext context) : IMotorcycleRepositor
     }
 
     public async Task<Motorcycle?> GetTrackedAsync(string id) => await _dbSet.FindAsync(id);
+
+    public Task<bool> HasRentalAsync(string id) => _rental.AnyAsync(x => x.MotorcycleId == id); 
 
     public void Insert(Motorcycle motorcycle)
     {
