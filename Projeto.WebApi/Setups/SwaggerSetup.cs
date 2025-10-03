@@ -9,7 +9,6 @@ public static class SwaggerSetup
 
         services.ConfigureSwaggerGen(options =>
         {
-            options.EnableAnnotations();
             options.SwaggerDoc("1.0.0", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Projeto API", Version = "1.0.0" });
         });
     }
